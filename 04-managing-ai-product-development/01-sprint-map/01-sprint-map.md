@@ -17,6 +17,16 @@ Sprint structure — one step per topic:
 
 Final deliverable: a **Kanban board** with tasks distributed across roles (Data Engineer, Data Scientist, ML Engineer), covering the path from first prototype to full launch, the chosen way of organizing the team, and a justification of where a model vs a rule is used.
 
+```mermaid
+flowchart LR
+    A["1 Development<br/>lifecycle"] --> B["2 Team"]
+    B --> C["3 Work<br/>organization"]
+    C --> D["4 Rule vs model"]
+    D --> E["5 Puls case"]
+    E --> K["Kanban board:<br/>DE, DS, MLE tasks"]
+```
+*Figure: the sprint route and the final deliverable.*
+
 ## Case / example
 Project case: **"Stupen"**, an online vocational school for adults — same story as the previous sprint (slow project-work reviews, growing review queue, churn of students who didn't get feedback in time). Now the task is to plan implementation (team, roles, stages), not design the concept.
 
