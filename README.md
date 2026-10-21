@@ -2,7 +2,7 @@
 
 Personal study notes (in my own words) from the Yandex Practicum course «Курс по запуску AI/ML-продуктов и управлению им». The folder structure mirrors the course: **module → topic → lesson**.
 
-> These are condensed notes, not course materials. Diagrams and videos aren't included.
+> These are condensed notes, not course materials. Each note has original Mermaid diagrams (they render on GitHub). Course images and videos are not included.
 
 ## 01-immersion-in-the-profession
 - **01-immersion-in-the-profession**
