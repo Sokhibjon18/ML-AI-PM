@@ -38,6 +38,36 @@
    - Non-functional: measurable (latency, refresh rate, availability, share of missed calculations).
 8. **Economic scale.** Value of −1 p.p. monthly churn with 12,000 students at 13,000 ₽. Full ROI needs system cost, retention duration and experiment results.
 
+```mermaid
+flowchart TD
+    S1["1 Business problem"] --> S2["2 Baseline"]
+    S2 --> S3["3 Walking Skeleton"]
+    S3 --> S4["4 AI Canvas"]
+    S4 --> S5["5 Data"]
+    S5 --> S6["6 Model and metrics"]
+    S6 --> S7["7 Requirements"]
+    S7 --> S8["8 Economic scale"]
+```
+*Figure: the 8 steps of the project brief. Structure only, no solution.*
+
+```mermaid
+flowchart LR
+    VP["Value Proposition"] --> CU["Customers"]
+    CU --> ST["Stakeholders"]
+    ST --> DA["Data"]
+    DA --> SK["Skills"]
+    SK --> OU["Output"]
+    OU --> IN["Integration"]
+    IN --> CO["Cost"]
+    CO --> RE["Revenue / effect"]
+    DA <-.->|check| OU
+    OU <-.->|check| VP
+    IN <-.->|check| VP
+    CU <-.->|check| DA
+    CO <-.->|check| RE
+```
+*Figure: step 4, the nine Canvas blocks in order, with the five links to check as dotted lines.*
+
 ## Deliverables
 - AI Canvas (template) plus Walking Skeleton.
 - Explanatory note, 500–700 words, with 5 justifications:
