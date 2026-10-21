@@ -14,6 +14,14 @@
   - **Stupen** — online career school for adults; the student's own final project (Canvas + memo) is on this case.
   - **Puls** — telemedicine service; a stretch case with two ML tasks at once, read-only, no assignment.
 
+```mermaid
+flowchart LR
+    Y["Yarmarka<br/>home and craft marketplace"] -->|"worked examples"| U["How the cases are used"]
+    S["Stupen<br/>online career school"] -->|"your final project"| U
+    P["Puls<br/>telemedicine, two ML tasks"] -->|"stretch case, read-only"| U
+```
+*Figure: the three running cases and the role each plays in the sprint.*
+
 ## Frameworks / methods
 Sprint topic map (each topic fills a Canvas section):
 1. Sprint map (this lesson)
@@ -24,6 +32,18 @@ Sprint topic map (each topic fills a Canvas section):
 6. Requirements — functional/non-functional, path to the memo
 7. ★ Puls case — harder conditions, compare your logic with the expert's
 8. Project description — instructions, self-check list, reviewer rubric
+
+```mermaid
+flowchart LR
+    T2["AI Canvas +<br/>Walking Skeleton"] --> T3["Problem vs<br/>solution space"]
+    T3 --> T4["Data as a<br/>product component"]
+    T4 --> T5["Models and metrics<br/>by cost of error"]
+    T5 --> T6["Functional and<br/>non-functional reqs"]
+    T6 --> T7["★ Puls case"]
+    T7 --> T8["Project description<br/>and rubric"]
+    T8 --> OUT["Stupen AI Canvas<br/>+ explanatory memo"]
+```
+*Figure: each sprint topic adds a layer that ends up in the final Canvas and memo.*
 
 ## PM takeaways
 - Study linearly; do problem sets right after each topic.
