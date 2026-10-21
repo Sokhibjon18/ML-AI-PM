@@ -8,6 +8,16 @@
 - Causal chain to follow: **problem → model output → task type → error → model metric → product result**.
 - The Canvas is a set of hypotheses, not a final spec.
 
+```mermaid
+flowchart LR
+    A["Problem"] --> B["Model output"]
+    B --> C["Task type"]
+    C --> D["Error"]
+    D --> E["Model metric"]
+    E --> F["Product result"]
+```
+*Figure: the causal chain both sections must follow. A broken link means revisiting the Canvas.*
+
 ## Frameworks / methods
 
 ### "Model" section — four elements
@@ -21,6 +31,26 @@ Consistency checks after drafting:
 2. Does it work for new users and new items (cold start)?
 3. Can the output reach the right point in the product?
 4. Does the output match the value promised elsewhere in the Canvas?
+
+```mermaid
+flowchart LR
+    subgraph M["Model section"]
+        I["Input<br/>linked to Data"] --> O["Output"]
+        O --> T["Task type"]
+        T --> W["Rationale<br/>in one sentence"]
+    end
+    subgraph K["Consistency checks"]
+        K1["Input available<br/>at decision time?"]
+        K2["Works under<br/>cold start?"]
+        K3["Output reaches<br/>the product?"]
+        K4["Matches promised<br/>value?"]
+    end
+    W --> K1
+    W --> K2
+    W --> K3
+    W --> K4
+```
+*Figure: the four elements of the "Model" section and the checks after drafting.*
 
 ### "Metrics" section — steps
 1. Define the positive outcome (per stage — candidate retrieval vs final selection differ).
@@ -39,6 +69,26 @@ Model draft: input = buyer info, interactions, available item attributes; output
 Metrics draft:
 - Broad retrieval — primary: recall (missed item can't return later); constraint: control candidate-set size/quality.
 - Final selection — primary: precision (irrelevant item steals a scarce slot); baseline: current popular-items home page; product metrics: conversion to purchase, GMV per user; also monitor long-tail discoverability and search→recommendation cannibalization.
+
+```mermaid
+flowchart LR
+    subgraph S1["Broad retrieval"]
+        A1["Primary: recall<br/>missed item never returns"]
+        A2["Constraint: candidate-set<br/>size and quality"]
+    end
+    subgraph S2["Final selection"]
+        B1["Primary: precision<br/>bad item steals a slot"]
+        B2["Baseline: popular-items<br/>home page"]
+    end
+    subgraph P["Product metrics"]
+        C1["Conversion to purchase"]
+        C2["GMV per user"]
+        C3["Monitor: long tail,<br/>search cannibalization"]
+    end
+    S1 --> S2
+    S2 --> P
+```
+*Figure: Yarmarka "Metrics" draft, per stage, down to product metrics.*
 
 Example inconsistencies:
 - Value "boost new items" + Data "only per-item purchase history" → new items have no history (cold start contradiction). Quiz answer: check how the system handles items with no interaction history first — not library, language, LOC or feature count.

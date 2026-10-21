@@ -31,12 +31,43 @@ Algorithm for choosing the task type:
 4. Check whether a target answer is known for training examples → supervised vs unsupervised.
 5. Verify against available data: does the data actually allow producing this output, and do target signals exist?
 
+```mermaid
+flowchart TD
+    A["State the product outcome<br/>concretely"] --> B{"What must the<br/>model return?"}
+    B -->|"a known class"| C["Classification"]
+    B -->|"a number"| D["Regression"]
+    B -->|"an order"| E["Ranking"]
+    B -->|"unknown groups"| F["Clustering"]
+    C --> G{"Correct answers known<br/>for training examples?"}
+    D --> G
+    E --> G
+    F --> G
+    G -->|yes| H["Supervised"]
+    G -->|no| I["Unsupervised"]
+    H --> J["Check: data and target<br/>signals support this output"]
+    I --> J
+```
+*Figure: choosing the task type from the output, then checking labels and data.*
+
 What to record in the AI Canvas "Model" section (no algorithm yet): input, output, task type, why.
 
 ## Case / example
 "Yarmarka" marketplace home-page personalization: 3.1M products, 71% of GMV from 4% of assortment; goal includes surfacing long-tail items.
 - Canvas draft: Input = buyer context + available items; Output = items ordered by predicted relevance; Type = ranking; Why = product must set relative order of many items.
 - Sub-tasks in the same product: new-item category (classification), SKU demand (regression), home-page order (ranking), behavior-based buyer groups (clustering).
+
+```mermaid
+flowchart LR
+    P["Yarmarka marketplace"] --> A["New-item category"]
+    P --> B["SKU demand"]
+    P --> C["Home-page order"]
+    P --> D["Behavior-based<br/>buyer groups"]
+    A --> A1["Classification"]
+    B --> B1["Regression"]
+    C --> C1["Ranking"]
+    D --> D1["Clustering"]
+```
+*Figure: one product, four models of different types.*
 
 Quiz principles tested: output form decides the type — numbers in features (price) don't make it regression; catalog categories existing don't make ranking a classification task; an internal numeric score doesn't change a ranking goal into regression.
 

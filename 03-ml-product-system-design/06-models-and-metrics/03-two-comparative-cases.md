@@ -26,10 +26,29 @@ Yarmarka facts: 3.1M SKUs, 12K sellers, 4.2M MAU buyers, 62.9M visits/month, 1.7
 
 - FN at stage 1 also hurts long-tail visibility, a core business problem.
 
+```mermaid
+flowchart LR
+    C["Full catalog<br/>3.1M SKUs"] --> R["Broad retrieval"]
+    R --> S["Short-list<br/>~500 candidates"]
+    S --> F["Final selection"]
+    F --> U["20 home-page slots"]
+    R -.- R1["Costly error: FN<br/>Key metric: recall"]
+    F -.- F1["Costly error: FP<br/>Key metric: precision"]
+```
+*Figure: two sequential decisions, each with its own costly error and metric.*
+
 Three levels of evaluation:
 1. **System output** — personalized ordered list.
 2. **Output quality** — e.g., recall 0.72 → 0.84; precision up at final stage.
 3. **Product/business effect** — e.g., conversion 2.8% → 3.0% (+0.2 pp): 62.9M × 0.002 ≈ 125,800 extra orders → × 2,900 ₽ ≈ 365M ₽ GMV → × 12% commission ≈ 43.8M ₽ revenue/month. This is sizing, not proof of causality.
+
+```mermaid
+flowchart LR
+    A["Conversion<br/>2.8% → 3.0%"] --> B["≈125,800<br/>extra orders"]
+    B -->|"× 2,900 ₽"| C["≈365M ₽ GMV"]
+    C -->|"× 12% commission"| D["≈43.8M ₽<br/>revenue per month"]
+```
+*Figure: sizing the business effect at level 3. An estimate, not proof.*
 
 Built-in traps of the case:
 1. No defined baseline.
@@ -39,6 +58,18 @@ Built-in traps of the case:
 5. Effect not checked against scale and experiment uncertainty.
 
 Why CTR can mislead: (a) real gain; (b) redistribution from search with flat conversion; (c) "clickbait" items opened but not bought.
+
+```mermaid
+flowchart TD
+    A["CTR on recommendations ↑"] --> B{"What is behind it?"}
+    B --> C["Real gain"]
+    B --> D["Clicks moved from search,<br/>conversion flat"]
+    B --> E["Clickbait items opened,<br/>not bought"]
+    C --> V["Verify vs baseline:<br/>conversion and GMV per user"]
+    D --> V
+    E --> V
+```
+*Figure: three explanations for a CTR rise; only end metrics vs a baseline tell them apart.*
 
 Quiz principles: stage-1 dropped relevant items can't be recovered later; final-stage FP occupies a scarce slot; to claim business value you need conversion/GMV per user, baseline comparison and a search-cannibalization check — not algorithm name, feature count or library version.
 

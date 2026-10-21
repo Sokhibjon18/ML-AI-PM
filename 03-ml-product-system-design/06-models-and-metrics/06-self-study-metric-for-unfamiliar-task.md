@@ -22,6 +22,25 @@ Assignment steps:
 10. **Verify the AI's answer**: same positive class, FP/FN not swapped, metric tied to cost, no accuracy-as-universal, no F1 without argument, no ROC-AUC instead of threshold analysis, no invented losses/regulations, assumptions separated from facts.
 11. **Write a 3–5 sentence conclusion**: positive class, costlier error, chosen metric, causal rationale (+ note if you changed your mind after AI review).
 
+```mermaid
+flowchart LR
+    subgraph F["Frame it yourself"]
+        A["1-2 Dataset and<br/>task in own words"] --> B["3-4 Positive class,<br/>FP and FN"]
+        B --> C["5 Product context<br/>as stated assumption"]
+    end
+    subgraph D["Decide"]
+        E["6 Metric with<br/>causal sentence"] --> G["7 Threshold<br/>direction"]
+        G --> H["8 Link to<br/>product result"]
+    end
+    subgraph R["Review"]
+        I["9 AI critiques,<br/>does not choose"] --> J["10 Audit the<br/>AI answer"]
+        J --> K["11 Short conclusion"]
+    end
+    C --> E
+    H --> I
+```
+*Figure: the assignment in three phases. Thinking comes before the AI review.*
+
 Deliverable: one short doc with sections — dataset, framing, positive class, FP, FN, product assumption, metric, threshold, product link, AI check, conclusion. Reflection question: "What in my metric choice was decided by the product context, not the model?" — a good answer cites a concrete cost comparison.
 
 ## Case / example
@@ -31,7 +50,25 @@ Worked example (illustrative, not a template): **UCI Bank Marketing** — predic
 - Assumption: FP costlier because each wrong pick wastes a scarce slot → primary metric **precision**. Not recall (calls are the bottleneck), not accuracy (imbalance), not F1 (asymmetry is explicit), ROC-AUC only as a supplementary separation measure.
 - Threshold: explore raising it → fewer FPs, higher precision, but recall drops; choose by campaign economics.
 - Chain: precision ↑ → fewer useless calls → more conversions per contact → possibly lower acquisition cost. Verify via conversion per contact, calls per deposit, cost per deposit, total deposit volume, and whether reduced reach hurt the total.
+
+```mermaid
+flowchart LR
+    A["Precision ↑"] --> B["Fewer useless calls"]
+    B --> C["More conversions<br/>per contact"]
+    C --> D["Possibly lower<br/>acquisition cost"]
+    D -.-> V["Check: total deposits,<br/>did lower reach hurt?"]
+```
+*Figure: Bank Marketing product link, a hypothesis to verify.*
 - Data check: the `duration` feature (length of the last call) is only known after the call → **leakage** if deciding before calling; drop it or move the decision point.
+
+```mermaid
+flowchart LR
+    A["Client features<br/>known before call"] --> B["Decision point:<br/>call or not?"]
+    B --> C["Call happens"]
+    C --> D["duration becomes known"]
+    D -.->|"leakage if used<br/>at decision point"| B
+```
+*Figure: a feature is usable only if it exists at decision time.*
 - AI review added: FN is counterfactual in historical campaign data (we can't observe whether an uncalled client would have converted); recall would matter more if contacts were cheap, plentiful, and a missed depositor very costly.
 
 ## PM takeaways
