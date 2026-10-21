@@ -25,6 +25,31 @@ Inputs: case description, filled AI Canvas and Walking Skeleton, conclusions on 
 11. **Attach artifacts** (section 9): Canvas and Skeleton with version and date (page/tab if same file); links readable; links don't replace textual justification.
 12. **Prepare for hand-off**: remove template hints; 8 content sections + section 9; ≤1,000 words of content (metadata, links, attachments excluded). Cut repetition, not alternatives or open questions.
 
+```mermaid
+flowchart TD
+    subgraph A["Set the scene"]
+        S1["1 Transfer context<br/>sections 1, 2, 3, 6"]
+    end
+    subgraph B["Justify in section 4"]
+        S2["2 Why AI"] --> S3["3 Data and labeling"]
+        S3 --> S4["4 Model type"]
+        S4 --> S5["5 Use of output"]
+    end
+    subgraph C["Make it testable"]
+        S6["6 Requirements, sec. 5"] --> S7["7 Metrics, sec. 8"]
+        S7 --> S8["8 Risks, sec. 7"]
+        S8 --> S9["9 Verification plan"]
+    end
+    subgraph D["Finish"]
+        S10["10 Resolve contradictions"] --> S11["11 Attach artifacts"]
+        S11 --> S12["12 Hand-off,<br/>≤1,000 words"]
+    end
+    S1 --> S2
+    S5 --> S6
+    S9 --> S10
+```
+*Figure: the 12 steps grouped into four phases.*
+
 Five justifications map:
 | Justification | Section |
 |---|---|
@@ -33,6 +58,15 @@ Five justifications map:
 | Why this model type | 4 |
 | Why these metrics / trade-off | 8 (refs 5) |
 | Key risks and mitigation | 7 |
+
+```mermaid
+flowchart LR
+    A["Decision"] --> B["Basis"]
+    B --> C["Alternative<br/>and trade-off"]
+    C --> D["Limitation<br/>and check"]
+    D -.->|"check fails"| A
+```
+*Figure: the shape of every justification. A check that could overturn the decision closes the loop.*
 
 Final self-check: problem, audience, goals, scope described; all five justifications present; facts/hypotheses/assumptions separated with sources; FRs cover inputs/outputs/edge cases and NFRs are measurable; metric choice tied to product consequences with limits; each risk has mitigation and check, open questions have a path; all documents consistent; artifacts attached with versions/dates; ≤1,000 words, hints removed.
 

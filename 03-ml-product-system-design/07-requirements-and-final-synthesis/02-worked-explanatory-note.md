@@ -3,6 +3,28 @@
 > Module: ML Product System Design · Topic: Requirements and Final Synthesis · Lesson 2
 > Original: «Разобранный пример пояснительной записки»
 
+## At a glance
+
+```mermaid
+flowchart LR
+    subgraph C["Context"]
+        S1["1 Problem"] --> S2["2 Users and scenario"]
+        S2 --> S3["3 Goal and value"]
+    end
+    subgraph D["Decisions"]
+        S4["4 Solution and rationale"] --> S5["5 Requirements"]
+        S5 --> S6["6 Scope and constraints"]
+    end
+    subgraph V["Risks and checks"]
+        S7["7 Assumptions and risks"] --> S8["8 Verification and<br/>success criteria"]
+    end
+    S9["9 Artifacts:<br/>Canvas + Skeleton"]
+    S3 --> S4
+    S6 --> S7
+    S8 --> S9
+```
+*Figure: the 9-section note. Requirements in section 5 bridge decisions and verification.*
+
 ## Key ideas
 - The explanatory note ties together decisions about users, data, model and value: it **justifies choices, compares alternatives and states what remains to be verified** — not just a list of decisions.
 - No universal standard exists for such notes; the course uses a 9-section template you can adapt to your organization.
@@ -20,6 +42,16 @@ Yarmarka note (status: concept for pre-development discussion), condensed by sec
 6. **Scope & constraints** — v1 = home-page block only, not search; confirm history availability, card completeness and data-use permissibility before training; empty-list and personalization-off scenarios need separate requirements; compute limits checked against NFR-01.
 7. **Assumptions & risks** — popularity feedback loop (mitigated via item attributes + FR-03, new items evaluated separately); limited personalization for new buyers (FR-02 is a start, not proof of fit); gaps in impression logs could distort labels (check with data scientist; rethink labels if unrecoverable); residual bias from past ranking rules.
 8. **Verification & success criteria** — why NFR-02: each unsuitable item takes a useful slot; limits: doesn't assess order within top-10 or prove purchase; CTR doesn't prove GMV. FR tests on defined sets; then randomized experiment vs bestsellers measuring GMV and purchases per user, overall conversion, and search→block order shift. No effect → revisit; insufficient data → defer conclusion. Output at concept stage = agreed rationale and test plan, not proven growth. (Can be written as acceptance criteria.)
+
+```mermaid
+flowchart TD
+    A["FR tests on<br/>defined sets"] --> B["Randomized experiment<br/>vs category bestsellers"]
+    B --> M["Measure: GMV and purchases<br/>per user, conversion,<br/>search → block shift"]
+    M --> R{"Result?"}
+    R -->|"no effect"| RV["Revisit the decision"]
+    R -->|"insufficient data"| DF["Defer the conclusion"]
+```
+*Figure: section 8 verification path for Yarmarka.*
 9. **Artifacts** — attach AI Canvas and Walking Skeleton (data → ranking model → home-page service) with version/date; they must match the note.
 
 ## Frameworks / methods

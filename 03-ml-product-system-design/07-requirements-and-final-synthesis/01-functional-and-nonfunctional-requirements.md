@@ -13,6 +13,19 @@
 - **Functional requirement (FR)** — inputs, actions, output; must cover the main flow and key edge cases (e.g., missing data the decision usually relies on).
 - Distinguish: business goal ("increase purchases") vs FR draft ("on home open, return ordered list using buyer history") vs implementation ("use a neural net"). A technology can be a legitimate *constraint* if the reason is stated.
 - **Non-functional requirement (NFR)** — quality characteristics/operating conditions (latency, availability, model output quality). Needs **metric + target + measurement conditions + verification method**. "Fast/reliable/accurate" are not checkable.
+
+```mermaid
+flowchart TD
+    G["Business goal<br/>increase purchases"] --> R["Requirement<br/>condition + way to check"]
+    R --> FR["Functional: behavior"]
+    R --> NFR["Non-functional: quality"]
+    FR --> F1["Inputs, actions, output"]
+    FR --> F2["Main flow and<br/>key edge cases"]
+    NFR --> N1["Metric + target"]
+    NFR --> N2["Measurement conditions<br/>+ verification method"]
+    I["Implementation choice<br/>e.g. a neural net"] -.->|"not a requirement,<br/>unless a stated constraint"| R
+```
+*Figure: goal vs requirement vs implementation, and what FRs and NFRs must contain.*
 - **Guardrail (counter) metrics** — "X grows without Y getting worse".
 - **Quality Attribute Workshop (QAW)** — SEI method to elicit, prioritize and refine quality scenarios, usable before architecture exists.
 - **Utility tree** — from ATAM: overall utility → quality attributes → refinements → concrete scenarios, ranked by business importance and architectural difficulty/risk.
@@ -31,11 +44,35 @@ Edge cases to define explicitly (each needs its own behavior):
 | Personalization component down | Fallback list and timeout |
 - A fallback for new buyers doesn't solve new items: bestseller-only fallback keeps zero-sales items invisible (relevant since 71% GMV comes from 4% of items) — but that doesn't mean guaranteeing every new item exposure.
 
+```mermaid
+flowchart TD
+    A["Home page opened"] --> B{"Personalization<br/>component up?"}
+    B -->|no| X["Fallback list<br/>and timeout: to define"]
+    B -->|yes| C{"Buyer has history?"}
+    C -->|yes| D["FR-01: list ordered<br/>by history"]
+    C -->|no| E{"Category known?"}
+    E -->|yes| F["FR-02: category<br/>bestsellers"]
+    E -->|no| G["Behavior: to define"]
+    D --> H{"Orderable items exist?"}
+    F --> H
+    H -->|no| Y["What to show instead:<br/>to define"]
+```
+*Figure: the main flow and edge cases from the lesson. Each "to define" branch needs its own requirement. New items without history are a separate question.*
+
 Where targets come from: user task, current product measurements, system capability, cost of improvement. If no data, mark a target as preliminary and state how it'll be refined.
 
 Who owns model-quality NFRs: PM — important scenarios, error consequences, acceptable trade-offs; data scientists — metric/data/evaluation validity; engineers — system constraints (latency, fallback).
 
 Simplified QAW: (1) restate business goal and constraints; (2) collect quality-critical situations (late list, personalization down, new items unfindable); (3) merge duplicates, pick top ones; (4) refine each: source/trigger, affected part, conditions, expected response, measure of sufficiency.
+
+```mermaid
+flowchart LR
+    A["1 Restate goal<br/>and constraints"] --> B["2 Collect quality-<br/>critical situations"]
+    B --> C["3 Merge duplicates,<br/>pick top ones"]
+    C --> D["4 Refine each scenario"]
+    D --> E["Trigger, affected part,<br/>conditions, response,<br/>measure"]
+```
+*Figure: simplified Quality Attribute Workshop.*
 
 Self-check (adapted from NASA requirement-quality guidance): why is it needed; is behavior/quality unambiguous; are conditions stated; can pass/fail be verified; are agreed decisions, preliminary targets and open questions distinguishable.
 

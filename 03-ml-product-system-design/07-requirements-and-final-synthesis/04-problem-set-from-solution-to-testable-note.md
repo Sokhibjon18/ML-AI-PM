@@ -8,6 +8,15 @@
 - Overall sequence: expected result → conditions and constraints → testable wording → justification → concept consistency.
 - All numbers are exercise conditions, not replacements for the lesson-2 requirements.
 
+```mermaid
+flowchart LR
+    A["Expected result"] --> B["Conditions and<br/>constraints"]
+    B --> C["Testable wording"]
+    C --> D["Justification"]
+    D --> E["Concept consistency"]
+```
+*Figure: the overall sequence the four exercises follow.*
+
 ## Frameworks / methods
 What each exercise tests and the principle behind correct answers:
 
@@ -16,6 +25,18 @@ What each exercise tests and the principle behind correct answers:
 - Correct I/O is defined at the level of *this* service (ordered list in → first ≤5 out), not purchase history or full catalog.
 - Complete behavior covers both edge cases (fewer than 5, empty) and preserves order; padding from the catalog or "use a recommender" are wrong (new data source / implementation, untestable).
 - Model write-up: FR with tests for 7 → first 5 in order, 3 → same 3, 0 → empty. "Up to five items" alone doesn't say *which* items.
+
+```mermaid
+flowchart LR
+    IN["Ordered, de-duplicated<br/>list available in city"] --> SVC["Selection service<br/>no re-ranking"]
+    SVC --> T1["7 in → first 5,<br/>order kept"]
+    SVC --> T2["3 in → same 3,<br/>order kept"]
+    SVC --> T3["0 in → empty"]
+    T1 --> HB["Home block"]
+    T2 --> HB
+    T3 --> HB
+```
+*Figure: exercise 1 FR with its three test cases, defined at the service boundary.*
 
 ### 2. "The data team will define quality" (NFR)
 - Agreed: mean share of suitable items in top-5, preliminary threshold 0.8, 20 equally weighted scenarios with ≥5 available items each, relevance pre-judged.
@@ -35,6 +56,15 @@ What each exercise tests and the principle behind correct answers:
 - Fix: agree no-history behavior, refine FR and test, reflect in note and both diagrams (not "the algorithm will figure it out", not just attach fresh versions).
 - Agreed fix in the exercise: no history and no category → first ≤5 items from a prepared list of 30-day global bestsellers available in the city, all if fewer, empty if empty, order kept. Test: 3 items → same 3 in order. Canvas: name this source, don't promise personalization here. Skeleton: add branch "global list → selection service → home block". Note: update scenario, FR, test; list updated diagram versions in section 9.
 - Fixing one case doesn't prove the whole concept ready.
+
+```mermaid
+flowchart LR
+    P["Purchase history<br/>existing path"] --> SEL["Selection service"]
+    G["30-day global bestsellers<br/>available in city<br/>new branch"] --> SEL
+    SEL --> HB["Home block"]
+    N["No history and<br/>no category"] -.->|uses| G
+```
+*Figure: the Skeleton branch added in exercise 4. Canvas, FR, test and note must all reflect it.*
 
 ## PM takeaways
 - Define I/O at the boundary of the component you're specifying.
