@@ -3,6 +3,24 @@
 > Module: Managing AI Product Development · Topic: AI Product Lifecycle: PoC to Production · Lesson 1
 > Original: «Три стадии жизненного цикла»
 
+## At a glance
+
+```mermaid
+flowchart LR
+    I["Idea"] --> P["PoC<br/>Feasible on our data?"]
+    P --> PD{"Go?"}
+    PD -->|"change approach"| P
+    PD -->|stop| X["Stop"]
+    PD -->|go| B["Baseline<br/>How good is simple?"]
+    B --> BD{"Invest in<br/>complexity?"}
+    BD -->|"no"| K["Keep baseline"]
+    BD -->|yes| R["Production<br/>Stable, safe, efficient?"]
+    R --> RD{"Launch?"}
+    RD -->|"no"| SB["Send back"]
+    RD -->|"yes or limited scope"| L["Launch"]
+```
+*Figure: three stages, each ending in a go / change / stop decision. Stopping or keeping the baseline are valid outcomes.*
+
 ## Key ideas
 - AI product development is a sequence of decisions that each reduce uncertainty, not one big build: **PoC → baseline → production readiness**. Each stage answers a different question and ends in a go / change / stop decision.
 - A model result means nothing without comparison: 84% correct routing vs a keyword baseline at 82% (cheaper, maybe partial coverage) tells a very different story.
@@ -52,8 +70,29 @@
 | Evaluation | Technical quality criterion | Product experiment + guardrail metrics |
 | Operations | Manual result checks | Monitoring, alerts, incident owner, rollback |
 - Support example: model gets messages via API, returns topic within allowed time to the queue system; low confidence or outage → general queue or baseline rules.
+
+```mermaid
+flowchart LR
+    M["Support message"] --> API["Model via API"]
+    API --> C{"Confident and<br/>within time?"}
+    C -->|yes| Q["Topic → queue system"]
+    C -->|"low confidence<br/>or outage"| F["General queue or<br/>baseline rules"]
+```
+*Figure: production routing with the baseline kept as fallback.*
 - PM: fix the user scenario and where the output is used; agree SLOs with engineers; set product and guardrail metrics (time to first response, redirect share, queue load, misroutes); assign owners for data, model, integration, incidents.
 - Gradual rollout: internal testing → shadow mode → small % of traffic → A/B test → scale; rollback conditions and guardrail stop-thresholds defined before real traffic.
+
+```mermaid
+flowchart LR
+    A["Internal testing"] --> B["Shadow mode<br/>logged, not used"]
+    B --> C["Small % of traffic"]
+    C --> D["A/B test"]
+    D --> E["Scale"]
+    C -.->|"guardrail breached"| RB["Rollback"]
+    D -.->|"guardrail breached"| RB
+    E -.->|"guardrail breached"| RB
+```
+*Figure: gradual rollout. Shadow mode checks technical readiness only; product impact needs real traffic.*
 - Readiness is judged on the whole set: great offline metrics don't save an unstable/expensive service without fallback; a stable system doesn't justify launch if the experiment shows no effect.
 
 ### Stage transition criteria
