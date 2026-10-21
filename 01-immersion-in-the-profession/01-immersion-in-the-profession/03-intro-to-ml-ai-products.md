@@ -3,6 +3,17 @@
 > Module: Immersion in the Profession · Topic: Immersion in the Profession · Lesson 3
 > Original: «Знакомство с ML/AI-продуктами»
 
+## At a glance
+
+```mermaid
+flowchart LR
+  A["Button bot<br/>menu to canned answer"] -->|"breaks on free text"| B["ML / NLU<br/>intent to KB answer"]
+  B -->|"template does not fit"| C["LLM agent<br/>generated answer"]
+  C -->|"cost and hallucinations"| D["Hybrid ML + LLM<br/>ML routes, LLM handles rest"]
+```
+
+*Figure: Three automation approaches in the support case, and the limitation that pushes to the next one.*
+
 ## Key ideas
 - In classic software, code defines behavior. In ML/AI products, a **model trained on data** defines behavior — which changes the dev cycle, metrics, risks and the PM's responsibilities.
 - The lesson walks one case — automating customer support — through three approaches (button bot → ML/NLU → LLM agent) and shows how the PM's job changes at each step.
@@ -45,6 +56,31 @@ Choice depends on what you have most of: time, budget, or team readiness/skills.
 - **Cost** — development, labeling, infrastructure, model maintenance
 - **Revenue** — economic effect (lower support opex)
 
+```mermaid
+mindmap
+  root(("AI Canvas"))
+    Data
+      Historical dialogues labeled by category
+    Skills
+      Data engineer, NLP engineer, annotators
+    Output
+      Containment rate
+    Value Proposition
+      Cut operator load 40 percent
+    Integration
+      NLU in site chat, hands off on low confidence
+    Customers
+      Customers writing to support
+    Stakeholders
+      Head of support, CTO, operators
+    Cost
+      Development, labeling, infrastructure, maintenance
+    Revenue
+      Lower support opex
+```
+
+*Figure: The AI Canvas blocks filled in for the support-automation case.*
+
 Data questions a PM must answer: how many examples per category, how to handle class imbalance (one category 10× more frequent), what to do with requests that fit no category.
 
 ## Case / example
@@ -58,6 +94,24 @@ Data questions a PM must answer: how many examples per category, how to handle c
 | ML / NLU (after retrain) | 45% | 4.1 | 5 RUB |
 | LLM agent (all cases) | 64% | 4.4 | 25 RUB |
 | Hybrid ML + LLM | 75% | 4.5 | 10 RUB |
+
+```mermaid
+quadrantChart
+  title Containment vs cost per resolved case
+  x-axis "Cheap per case" --> "Expensive per case"
+  y-axis "Low containment" --> "High containment"
+  quadrant-1 "Effective but costly"
+  quadrant-2 "Effective and cheap"
+  quadrant-3 "Cheap but weak"
+  quadrant-4 "Costly and weak"
+  Manual operators: [0.98, 0.02]
+  Button bot: [0.03, 0.28]
+  ML NLU: [0.17, 0.45]
+  LLM agent: [0.83, 0.64]
+  Hybrid ML LLM: [0.33, 0.75]
+```
+
+*Figure: Stages from the case table; x = cost per resolved case scaled to 30 RUB, y = containment rate.*
 
 - **Button bot** missed the goal because users write free text and don't follow scripts — not because of copy or too few operators. Jumping straight to an LLM would trade this for hallucinations, cost and unpredictability.
 - **Model degradation:** precision on "refund" fell 0.83 → 0.71. Correct PM response: investigate what changed in the data and the user impact — not just backlog it, wait, or call it "DS's problem". Cause: a December surge of holiday-promo requests the model had never seen. Adding data and retraining fixed it.
