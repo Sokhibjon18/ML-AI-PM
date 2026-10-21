@@ -14,6 +14,15 @@
 
 Funnel: complaint 200K → specialty chosen 138K (69%) → doctor card 84K (61%) → checkout started 61K (73%) → paid 48K (79%). Biggest loss: 62K (31%) drop at specialty choice. Additionally 31% of consultations start with the wrong specialist; 19% of those end in refunds; NPS of that group −22. Search by complaint doesn't help ("stomach ache" → gastroenterologist, GP, surgeon, gynecologist — user still must choose).
 
+```mermaid
+xychart-beta
+    title "Puls booking funnel, thousands of users per month"
+    x-axis ["Complaint", "Specialty", "Doctor card", "Checkout", "Paid"]
+    y-axis "Users, K" 0 --> 210
+    bar [200, 138, 84, 61, 48]
+```
+*Figure: the funnel. The largest single drop, 62K, is at specialty choice.*
+
 **Part 1 — Two separate metrics:** (1) share choosing a specialty after the complaint; (2) share of consultations starting with an unsuitable specialist. Growth of (1) is only useful if (2) holds or improves. Note: some referrals are clinically valid diagnostic paths — must be separated from genuinely wrong routing (matters for labeling and offline eval).
 
 **Part 2 — Baseline in 3 weeks:** PM + chief physician build a question tree for frequent complaints (where, how long, accompanying symptoms) based on clinical guidelines → suggests one or several specialties; covers ~60% of typical cases. Baseline's two roles: solves part of the problem cheaply; reveals where rules break down (tree bloat, ambiguity, maintenance cost). Track coverage, quality (expert agreement), build time, maintenance cost. ML's first target = cases where the tree is weak (ambiguous complaints, varied wording). A baseline can also be a very simple ML model.
@@ -23,6 +32,23 @@ Funnel: complaint 200K → specialty chosen 138K (69%) → doctor card 84K (61%)
 |---|---|
 | Specialty matching | complaint + clarifying answers + context → ranking of specialties → short prioritized list → Puls UI → user picks specialty |
 | Pre-consultation history taking | complaint + answers → dialogue model → structured summary + follow-up questions → doctor → reads summary, clarifies gaps |
+
+```mermaid
+flowchart LR
+    subgraph H1["Hypothesis 1: specialty matching"]
+        A1["Complaint, answers,<br/>context"] --> A2["Ranking of<br/>specialties"]
+        A2 --> A3["Short prioritized list"]
+        A3 --> A4["Puls UI"]
+        A4 --> A5["User picks specialty"]
+    end
+    subgraph H2["Hypothesis 2: history taking"]
+        B1["Complaint and<br/>answers"] --> B2["Dialogue model"]
+        B2 --> B3["Structured summary,<br/>follow-up questions"]
+        B3 --> B4["Doctor"]
+        B4 --> B5["Reads summary,<br/>clarifies gaps"]
+    end
+```
+*Figure: one journey, two Walking Skeletons with different outputs, consumers and actions, so two Canvases.*
 
 Canvas 1 (matching) highlights: value = faster, more accurate specialty choice; boundary = no diagnosis or treatment; stakeholders incl. chief physician, doctors, ML/data, legal, infosec, health regulators; output = short ranked list, multiple clinically acceptable specialties allowed; integration = after complaint, before doctor catalog; costs incl. de-identification, expert labeling, inference, offline eval, monitoring; effect must be proven vs baseline.
 Review changes: expert labeling becomes the offline-eval gold standard; historical choices and referrals are auxiliary signals only; cost includes label review, dispute resolution and updates; experts' role clarified; evaluation must allow several valid specialties. Walking Skeleton structure unchanged.
@@ -48,6 +74,15 @@ Order-of-magnitude estimates with assumptions still to verify.
 Team path, each step removing one uncertainty: funnel locates the loss → baseline gives an honest alternative → Walking Skeleton splits the broad assistant into two hypotheses → Canvas review exposes data and economics limits → metric choice gets a concrete product rationale.
 
 Next steps for matching: build expert gold labels, fix offline-eval protocol and baseline, agree UI requirements → build v1 → offline comparison vs baseline → if thresholds met, live experiment on two product metrics (step-pass rate, wrong-specialist share).
+
+```mermaid
+flowchart LR
+    A["Expert gold labels,<br/>eval protocol, baseline,<br/>UI requirements"] --> B["Build v1"]
+    B --> C["Offline comparison<br/>vs baseline"]
+    C --> D{"Thresholds met?"}
+    D -->|yes| E["Live experiment:<br/>step-pass rate and<br/>wrong-specialist share"]
+```
+*Figure: next steps for the specialty-matching hypothesis.*
 
 ## PM takeaways
 - Baseline first; measure ML's value relative to what already works.
