@@ -104,14 +104,14 @@ quadrantChart
   quadrant-2 "Effective and cheap"
   quadrant-3 "Cheap but weak"
   quadrant-4 "Costly and weak"
-  Manual operators: [0.98, 0.02]
-  Button bot: [0.03, 0.28]
-  ML NLU: [0.17, 0.45]
-  LLM agent: [0.83, 0.64]
-  Hybrid ML LLM: [0.33, 0.75]
+  Manual operators: [0.90, 0.10]
+  Button bot: [0.11, 0.32]
+  ML NLU: [0.22, 0.40]
+  LLM agent: [0.78, 0.62]
+  Hybrid ML LLM: [0.36, 0.71]
 ```
 
-*Figure: Stages from the case table; x = cost per resolved case scaled to 30 RUB, y = containment rate.*
+*Figure: Stages from the case table; x = cost per resolved case (scaled to 30 RUB), y = containment rate. Points are slightly compressed toward the centre so labels stay readable — positions are relative, read exact values from the table.*
 
 - **Button bot** missed the goal because users write free text and don't follow scripts — not because of copy or too few operators. Jumping straight to an LLM would trade this for hallucinations, cost and unpredictability.
 - **Model degradation:** precision on "refund" fell 0.83 → 0.71. Correct PM response: investigate what changed in the data and the user impact — not just backlog it, wait, or call it "DS's problem". Cause: a December surge of holiday-promo requests the model had never seen. Adding data and retraining fixed it.
