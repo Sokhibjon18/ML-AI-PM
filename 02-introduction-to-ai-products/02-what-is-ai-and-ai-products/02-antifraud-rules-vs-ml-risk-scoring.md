@@ -24,6 +24,24 @@
 | Risks | Heavy manual upkeep, slow to react to new schemes | Data/label dependence, metric & monitoring quality, poor explainability of individual scores |
 | Fits when | Simple known threat, little data, need fast control | Lots of labeled history, complex patterns, high cost of error |
 
+```mermaid
+flowchart LR
+  subgraph R["Rule set"]
+    direction LR
+    R1["Operation"] --> R2{"Amount and new country<br/>conditions met?"}
+    R2 -->|yes| R3["Hold for check"]
+    R2 -->|no| R4["Pass"]
+  end
+  subgraph ML["ML risk scoring"]
+    direction LR
+    M1["Operation + many signals"] --> M2["Model trained on<br/>verified outcomes"]
+    M2 --> M3["Risk score"]
+    M3 --> M4["Approve / confirm /<br/>manual review"]
+  end
+```
+
+*Figure: Same screen for the user; different decision mechanism inside.*
+
 ## Case / example — regulatory and legal layer
 - In antifraud, regulation mostly sets **boundaries**: how suspicious operations are checked, decisions recorded, data stored, client rights protected. The bank designs the model itself and owns its quality.
 - **Credit risk is stricter:** to use internal models for capital adequacy, the regulator reviews methodology, data and model quality — internationally Basel III; in Russia the Bank of Russia's IRB approach (incl. Regulation No. 483-P), which requires regulator approval.

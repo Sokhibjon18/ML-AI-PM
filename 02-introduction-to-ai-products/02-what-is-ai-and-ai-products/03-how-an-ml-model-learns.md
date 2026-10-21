@@ -29,6 +29,24 @@
 
 Hidden questions: what historical examples exist; how similar are they to the future; who confirmed the right answers and how; how fast does user/fraudster behavior change?
 
+```mermaid
+flowchart LR
+  A["1. Collect and label data"] --> B["2. Features"]
+  B --> C["3. Training"]
+  C --> D["4. Trained model"]
+  D --> E["5. Offline validation<br/>on holdout"]
+  E -->|"good enough"| F["6. Deployment"]
+  E -->|"not yet"| A
+  subgraph F["6. Deployment"]
+    direction LR
+    F1["Shadow mode"] --> F2["Partial rollout"] --> F3["Everyone"]
+  end
+  F --> G["7. Monitoring"]
+  G -->|"new confirmed cases"| A
+```
+
+*Figure: The ML chain as a quality loop; monitoring feeds new labeled data back into training.*
+
 **Learning approaches:**
 
 | Approach | Data example | Gist |
@@ -52,6 +70,19 @@ Supervised is the main focus for now — it best shows the data → labels → m
 ## Case / example
 - **Pre-trained model for Moscow apartment prices** (quiz): don't ship based on the authors' reported metrics (may be another city, period, market), and don't insist on training from scratch. Correct: validate on current Moscow data, check it uses relevant features (district, metro distance, building type, year, condition), adapt/fine-tune if needed. Sample size match is not the key criterion — relevance and freshness of data are.
 - Holdout data exists to check performance on examples the model never saw — not to speed inference or fix labels.
+
+```mermaid
+flowchart TD
+  P["Pre-trained model<br/>with reported metrics"] --> V["Validate on current<br/>local data"]
+  V --> F{"Uses relevant features?"}
+  F -->|no| T["Adapt or fine-tune"]
+  F -->|yes| G{"Good enough<br/>in our domain?"}
+  G -->|no| T
+  G -->|yes| S["Use it"]
+  T --> V
+```
+
+*Figure: Handling a pre-trained model: validate on your own data before trusting it.*
 
 ## PM takeaways
 - Label quality is a product risk: wrong labels in antifraud mean missed fraud or held legit payments.

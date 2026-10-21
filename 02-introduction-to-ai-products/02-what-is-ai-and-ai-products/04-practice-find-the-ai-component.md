@@ -12,11 +12,30 @@
 - AI: ETA prediction from order history, district, time of day and load; bank risk scoring trained on past fraud/legit operations; spam folder routing **if** a trained model decides (a banned-word list would be a rule).
 - Principle: a model generalizing from historical examples to new cases = AI; explicit conditions, schedules, sorts and filters = rules.
 
+```mermaid
+flowchart TD
+  F["Feature"] --> Q{"Does a model generalize<br/>from past examples?"}
+  Q -->|yes| AI["AI component<br/>ETA, risk scoring, ML spam filter"]
+  Q -->|no| R["Ordinary logic<br/>schedule, sort, filter, word list"]
+```
+
+*Figure: Classify by decision mechanism, not by how smart the feature looks.*
+
 **Task 2 — data → model → metric (streaming recommendations)**
 - Case: a streaming service shows everyone the same popular titles; wants personal picks based on viewing history and similar users.
 - **Data:** viewing history, likes/dislikes, completions, skips, searches, genres, behavior of similar users.
 - **Model:** estimates how likely a given user is to be interested in each title → personal selection.
 - **Metric:** recommendation CTR, completion rate, watch time after recommendation, conversion to viewing, plus negative signals (hides, complaints).
+
+```mermaid
+flowchart LR
+  D["Data<br/>history, likes, skips,<br/>similar users"] --> M["Model<br/>interest per title"]
+  M --> O["Personal selection"]
+  O --> K["Metrics<br/>CTR, completion, watch time"]
+  O --> N["Negative signals<br/>hides, complaints"]
+```
+
+*Figure: Task 2: data, model and metric for streaming recommendations.*
 
 **Task 3 — spot the data problem (courier ETA)**
 - Model trained on summer orders; winter brings snowfall, heavier traffic, slower districts, and an ad campaign spikes demand.

@@ -3,6 +3,20 @@
 > Module: Introduction to AI Products · Topic: What Is AI and AI Products · Lesson 1
 > Original: «Что такое ИИ и ИИ-продукты»
 
+## At a glance
+
+```mermaid
+flowchart LR
+  Dec["Decision to improve"] --> Data["Data<br/>examples with outcomes"]
+  Data --> Model["Model<br/>finds patterns"]
+  Model --> Metric["Metric<br/>how quality is judged"]
+  Metric --> Act["Product action"]
+  Con["Constraints<br/>latency, regulation, user impact"] -.-> Act
+  Metric -.->|"weak results: diagnose each level"| Data
+```
+
+*Figure: An AI product described as decision, data, model, metric plus constraints.*
+
 ## Key ideas
 - When someone says "let's add AI", the PM should immediately make it concrete: **what decision** will the system make, **what data** it needs, and **how quality** will be judged.
 - For a PM, AI is a way to make product decisions from data — classic ML (recommend, predict ETA, classify spam, rank search, score risk, detect objects) or generative AI (chat answers, text/image generation, summaries).
@@ -30,6 +44,16 @@ If results are weak, ask: missing examples in data? model fails to capture patte
 
 **Example thresholds (antifraud):** risk < 0.6 → approve; 0.6–0.8 → ask client for extra confirmation; > 0.8 → manual review. Lower threshold = more fraud caught but more friction for honest users; higher = less friction but more missed fraud. Choosing it is a **product decision** balancing business interest, user comfort and ops load.
 
+```mermaid
+flowchart LR
+  Op["Payment"] --> Sc["Risk score 0 to 1"]
+  Sc -->|"below 0.6"| A["Approve"]
+  Sc -->|"0.6 to 0.8"| C["Ask client to confirm"]
+  Sc -->|"above 0.8"| M["Manual review"]
+```
+
+*Figure: The threshold turns a model score into an action; moving it trades fraud caught against friction.*
+
 **When AI fits:**
 - Many similar, repeated cases.
 - Decision depends on a combination of many factors.
@@ -37,6 +61,19 @@ If results are weak, ask: missing examples in data? model fails to capture patte
 - Plus: relevant historical data with **confirmed outcomes** that covers all key scenarios (a bank with data only on approved loans, not rejected ones, trains on a biased picture).
 
 **When AI is risky:** strict rule compliance required, full predictability needed, or the regulator needs a detailed justification per decision. Then prefer rules, manual review, or AI as an assistant only (e.g., suggesting drug dosage while the doctor decides).
+
+```mermaid
+flowchart TD
+  Q{"Strict rules, full predictability<br/>or per-decision justification?"}
+  Q -->|yes| S["Rules, manual review,<br/>or AI as assistant only"]
+  Q -->|no| F{"Many similar cases, many factors,<br/>measurable quality?"}
+  F -->|no| S
+  F -->|yes| H{"Historical data with<br/>confirmed outcomes?"}
+  H -->|no| S
+  H -->|yes| OK["AI component is a<br/>viable hypothesis"]
+```
+
+*Figure: When AI fits versus when it is risky.*
 
 **PM checklist before starting:** which decision are we improving? do we have examples with known outcomes? do data reflect real scenarios? what errors are acceptable? how will we measure quality? If answered, the AI component is a viable product hypothesis.
 
