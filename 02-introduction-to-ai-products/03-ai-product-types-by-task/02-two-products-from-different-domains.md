@@ -20,6 +20,18 @@
 ## Case / example — E-commerce marketplace (three problems)
 Symptoms: search → add-to-cart conversion fell 18% → 14%; homepage recommendation blocks rarely opened; simultaneous stockouts of popular items and overstock of slow movers.
 
+```mermaid
+flowchart LR
+  G["Grow sales"] --> S1["Search conversion fell"]
+  G --> S2["Rec blocks rarely opened"]
+  G --> S3["Stockouts and overstock"]
+  S1 --> C1["Search and ranking<br/>NDCG@10"]
+  S2 --> C2["Recommendations<br/>cold start, diversity"]
+  S3 --> C3["Demand forecasting<br/>MAE + bias"]
+```
+
+*Figure: One business goal splits into three components, each owning a specific decision.*
+
 **1. Search & ranking**
 - Losses: relevant items exist but rank too low; system matches queries too literally (no synonyms, attributes, typos — e.g., "white running shoes" misses "color: milky, purpose: running"). Diagnose via logs + manual review of low-conversion queries.
 - Input: query, available catalog, constraints (region, price, delivery). Output: ranked list.
@@ -48,6 +60,18 @@ Problems: growing X-ray volume, long waits for reports at peak; doctors manually
 - Split train/test **by patient** (otherwise the model memorizes individuals). Separate eval on other clinics / other equipment vendors to test generalization.
 - Risks: missed pathology, too many false alarms, doctor over-reliance; even scanner model or brightness settings matter. PM defines usage boundaries, mandatory specialist confirmation, quality monitoring. Metrics: sensitivity and specificity.
 
+```mermaid
+flowchart LR
+  X["X-ray scan"] --> M["CV model<br/>risk + area"]
+  M --> T{"Risk above<br/>threshold?"}
+  T -->|yes| U["Move up queue,<br/>show area as hint"]
+  T -->|no| N["Normal queue"]
+  U --> D["Radiologist decides"]
+  N --> D
+```
+
+*Figure: Medtech CV component: the model reprioritizes, the specialist makes the final call.*
+
 **NLP component — key problems from patient history**
 - Not diagnosing — structuring: extract key facts, show dynamics with links to source documents; separate active vs resolved issues, chronic vs one-off, tie each claim to a source.
 - Main offline metric: **recall on key problems** (experts mark 5, system finds 4 → 80%). Missing a critical fact is dangerous.
@@ -68,3 +92,14 @@ Problems: growing X-ray volume, long waits for reports at peak; doctors manually
 - Sequence: understand input data → agree on labeling (who defines truth, disputed cases, freshness) → choose an offline metric that reflects the costly error, plus constraints on latency, manual-review load and per-segment quality → link offline eval to the product metric.
 - Rollout depends on the cost of error: shadow mode fits almost everything; search/recs → A/B test; medical → limited pilot, mandatory human review, gradual expansion.
 - A complete PM brief to the team covers: decision, data, labeling, model output, product action, eval, launch method, risks.
+
+```mermaid
+flowchart LR
+  O["Offline eval"] --> S["Shadow mode"]
+  S --> Q{"Cost of error?"}
+  Q -->|"search, recs"| AB["A/B test with<br/>guardrail metrics"]
+  Q -->|"medical"| P["Limited pilot,<br/>mandatory human review"]
+  P --> G["Gradual expansion"]
+```
+
+*Figure: Rollout path by cost of error.*

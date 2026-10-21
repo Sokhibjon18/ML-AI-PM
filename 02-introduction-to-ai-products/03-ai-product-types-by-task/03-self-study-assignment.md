@@ -15,6 +15,20 @@
 4. Ask an AI assistant the same breakdown for your three scenarios, including two options and a deciding signal for ambiguous cases.
 5. Pick one meaningful mismatch (task type, inputs, action or metric) and write 4–6 sentences: where versions differ, which better ties to the product decision, what data/process knowledge is missing, whom on the team you'd ask.
 
+```mermaid
+flowchart LR
+  A["Problem"] --> B["Product decision"]
+  B --> C["Modality"]
+  C --> D["Task type"]
+  D --> E["Data available<br/>before decision"]
+  E --> F["Model output"]
+  F --> G["Product action"]
+  G --> H["Success metric"]
+  H --> I["Hidden question<br/>not in UI"]
+```
+
+*Figure: The chain to fill for each of the three chosen components.*
+
 **Example of expected detail:** maps app ranks cafés for "café with a kids' room" → decide what to show first; text query + tabular place data; search & ranking; input = query, candidates, city, hours, distance, filters; output = ranked list; action = show results/cards; metric = NDCG@10; open question = how relevance is defined and how paid placements are handled.
 
 **Self-check list**

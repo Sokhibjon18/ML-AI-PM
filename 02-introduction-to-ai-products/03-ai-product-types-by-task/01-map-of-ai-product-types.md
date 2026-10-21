@@ -20,9 +20,34 @@
   - future numeric value → **forecasting**
   - signal of suspicious deviation → **anomaly detection / monitoring**
 
+```mermaid
+flowchart TD
+  Q{"What must the<br/>model return?"}
+  Q -->|"a category"| C["Classification"]
+  Q -->|"object + location"| D["Detection"]
+  Q -->|"groups, no categories"| K["Clustering"]
+  Q -->|"ordered list for a query"| S["Search and ranking"]
+  Q -->|"personal list, no query"| R["Recommendations"]
+  Q -->|"future number"| F["Forecasting"]
+  Q -->|"deviation signal"| A["Anomaly monitoring"]
+```
+
+*Figure: Task type is picked by the required output.*
+
 ## Frameworks / methods
 **Six questions to turn an idea into AI-component requirements:** modality → task type → model input → model output → product action after the output → quality metric.
 Example: photo search on a marketplace = image modality; search & ranking; input = user photo + catalog; output = ordered similar items; action = show in results; metric = NDCG@K.
+
+```mermaid
+flowchart LR
+  A["Modality<br/>image"] --> B["Task type<br/>search and ranking"]
+  B --> C["Input<br/>photo + catalog"]
+  C --> D["Output<br/>ordered similar items"]
+  D --> E["Action<br/>show in results"]
+  E --> F["Metric<br/>NDCG@K"]
+```
+
+*Figure: The six questions, filled in for marketplace photo search.*
 
 **Classification**
 - Input: object + features (ticket text, channel, order status; or product photo, title, price). Output: category or class probabilities.
@@ -60,6 +85,18 @@ Example: photo search on a marketplace = image modality; search & ranking; input
 - **Alert precision**: 100 alerts, 25 confirmed → 25%, i.e., 75 wasted investigations.
 
 **Picking a metric by cost of error:** precision when false positives are costly; sensitivity/recall when misses are dangerous; F1 to balance both; accuracy only with balanced classes and similar error costs; MAE for numeric forecasts.
+
+```mermaid
+flowchart TD
+  Q{"Output type?"} -->|"number"| MAE["MAE + bias"]
+  Q -->|"class"| E{"Which error<br/>is costlier?"}
+  E -->|"false positives"| P["Precision"]
+  E -->|"misses"| R["Recall / sensitivity"]
+  E -->|"both matter"| F["F1"]
+  E -->|"similar costs,<br/>balanced classes"| A["Accuracy"]
+```
+
+*Figure: Choosing a metric by the cost of each error type.*
 
 **Quick map:**
 
