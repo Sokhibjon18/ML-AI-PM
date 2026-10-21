@@ -69,6 +69,10 @@ Personal study notes (in my own words) from the Yandex Practicum course «Кур
 - **08-ai-canvas-in-a-complex-case**
   - [AI Canvas in a Complex Case](03-ml-product-system-design/08-ai-canvas-in-a-complex-case/01-ai-canvas-in-a-complex-case.md)
 
+- **09-final-project**
+  - [Final Project: AI Product Concept for "Stupen"](03-ml-product-system-design/09-final-project/01-project.md)
+  - [Feedback Survey](03-ml-product-system-design/09-final-project/02-feedback.md)
+
 ## 04-managing-ai-product-development
 - **01-sprint-map**
   - [Sprint Map](04-managing-ai-product-development/01-sprint-map/01-sprint-map.md)
