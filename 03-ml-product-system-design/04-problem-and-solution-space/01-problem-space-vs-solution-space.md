@@ -9,12 +9,33 @@
 - AI adds uncertainty on top of classic product risk: even with a correctly framed problem, there's no guarantee an AI approach reaches the needed quality.
 - Key question: "Which specific problem are we solving, and is AI really the best way to solve it?"
 
+```mermaid
+flowchart LR
+    A["Symptom"] --> B["Cause"] --> C["Validated<br/>solution"] --> D["Implementation"]
+```
+*Figure: the order of decisions the PM manages — jumping straight from symptom to implementation is the classic failure.*
+
 ## Concepts & definitions
 - **Business signal / symptom** — an observable change in user behavior, metrics or product performance that hints at a problem but doesn't explain its cause (e.g. 31% of telemedicine patients drop off; long tail gets no traffic; project review SLA met only 71% of the time). Business often brings guesses dressed as problems ("sales fell — it's the website"; "add an AI chat for negative reviews").
 - **Problem Space** — *what* must change to remove the symptom. A good problem statement has three parts: **current situation, measurable pain, specific audience** (maps to the Value section of AI Canvas).
 - **Solution Space** — *how* best to solve the defined problem: widen options, test hypotheses, pick the one with the best balance of value, feasibility, cost and risk.
 - **Double Diamond** — a map of *questions*, not a task pipeline: Discover (widen problem understanding) → Define (narrow to one problem; checkpoint "do we really understand it?", else back to Discover) → Develop (widen solution options, avoid fixating on a favorite/hyped one) → Deliver (choose and prove the solution works). Transition to Solution Space only when the problem is stated with a measurable outcome (user, context, cause) and the team knows *what* it is changing.
 - **"Triple Diamond" / Impact Space** — informal extension (no standard): after launch, ask whether the solution creates the expected effect in the real world — quality retention, behavior change, data drift, retraining, cost vs value. AI products are never "build and forget".
+
+```mermaid
+flowchart LR
+    SIG["Business signal<br/>symptom"] --> DI
+    subgraph PS["Problem Space · what to change"]
+        DI["Discover<br/>widen"] --> DE["Define<br/>narrow to one problem"]
+    end
+    DE -->|"not understood yet"| DI
+    DE -->|"measurable problem stated"| DV
+    subgraph SS["Solution Space · how to change it"]
+        DV["Develop<br/>widen options"] --> DL["Deliver<br/>choose and prove"]
+    end
+    DL --> IM["Impact Space<br/>effect after launch?"]
+```
+*Figure: Double Diamond as a map of questions, with the informal "third diamond" after launch.*
 
 ## Frameworks / methods
 **AI-specific filters between problem and solution:**
@@ -23,6 +44,20 @@
 3. AI isn't always best — e.g. form-filling errors are better fixed by UI/steps.
 
 **Four conditions for AI to create results:** enough quality data? no simpler solution? reliable technical solution possible? cost justified for the business?
+
+```mermaid
+flowchart TD
+    P["Problem defined"] --> C1{"Enough<br/>quality data?"}
+    C1 -->|yes| C2{"No simpler<br/>solution?"}
+    C2 -->|yes| C3{"Reliable technical<br/>solution possible?"}
+    C3 -->|yes| C4{"Cost justified<br/>for the business?"}
+    C4 -->|yes| AI["AI is a candidate"]
+    C1 -->|no| X["AI not justified yet"]
+    C2 -->|no| X
+    C3 -->|no| X
+    C4 -->|no| X
+```
+*Figure: the four conditions as a gate between problem and AI solution.*
 
 **PM anti-patterns:**
 - "Let's add AI" — solution before problem (LLM chat for falling conversion with no diagnosis).

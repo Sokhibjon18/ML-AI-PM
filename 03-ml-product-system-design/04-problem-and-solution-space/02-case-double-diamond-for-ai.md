@@ -3,6 +3,20 @@
 > Module: ML Product System Design · Topic: Problem and Solution Space · Lesson 2
 > Original: «Кейс. Ход рассуждений через Double Diamond для AI»
 
+## At a glance
+
+```mermaid
+flowchart LR
+    S["Signal: search<br/>conversion 3.4% → 1.8%"] --> D1["Discover<br/>where users drop"]
+    D1 --> D2["Define<br/>search misses intent"]
+    D2 --> F["AI applicability<br/>check"]
+    F --> D3["Develop<br/>compare four options"]
+    D3 --> D4["Deliver<br/>offline, prod, A/B"]
+    D4 -->|"second iteration"| D4
+    D4 --> AL["After launch<br/>retraining triggers"]
+```
+*Figure: the reasoning path of the Yarmarka search case, with the AI filter as an extra bridge between the diamonds.*
+
 ## Key ideas
 - One business signal can have many causes; the team agreed on a rule: **don't discuss solutions until the problem is understood.**
 - In AI products there's an extra bridge between Problem and Solution Space: an **AI applicability filter** — enough (quality) data? is AI the best option? can it be operated? is it worth it?
@@ -19,6 +33,17 @@
 - Hypothesis 2 — poor item cards: users often didn't even reach cards; they dropped at the results page → narrowed to query→results.
 - Hypothesis 3 — search scenarios: complex intent queries ("laptop for a designer", "trail running shoes") returned gaming laptops / gym sneakers. The system matched words, not intent.
 
+```mermaid
+flowchart TD
+    Q["Where do users stop<br/>moving toward purchase?"] --> H1["H1: prices"]
+    Q --> H2["H2: poor item cards"]
+    Q --> H3["H3: search scenarios"]
+    H1 -->|"conversion fell even<br/>with stable prices"| R1["Rejected"]
+    H2 -->|"users dropped before<br/>reaching cards"| R2["Narrowed to<br/>query → results"]
+    H3 -->|"words matched,<br/>not intent"| R3["Confirmed cause"]
+```
+*Figure: each hypothesis tested against data; rejections narrow the search too.*
+
 **Define** — problem statement: users don't find relevant items via search because the algorithm doesn't understand the intent of complex queries and doesn't put the best results at the top. Says *what* to change, *where*, and what success is.
 
 **AI applicability check**
@@ -34,6 +59,19 @@
 3. LLM as search core — strong NLU, but high opex, latency, inaccuracy, low explainability. Useful as a component, not the main ranker.
 4. **Hybrid ranking** — keep the classic engine, add ML re-ranking with item attributes, seasonality, search history, user context; fast to integrate, keeps latency, improves as data accumulates. **Chosen.**
 Selection lens: by tech sophistication LLM wins; by ease rules win; product decision weighs user ease, incremental profit, cost payback, scalability.
+
+```mermaid
+flowchart TD
+    O["Search options"] --> A["Better rules<br/>quick, explainable"]
+    O --> B["Semantic search<br/>good for vague intent"]
+    O --> C["LLM as core<br/>strong language skills"]
+    O --> D["Hybrid ranking<br/>classic engine + ML re-rank"]
+    A -->|"unmaintainable"| XA["Rejected"]
+    B -->|"weak on exact queries,<br/>big infra change"| XB["Not chosen"]
+    C -->|"opex, latency,<br/>low explainability"| XC["Component only"]
+    D -->|"fast to integrate,<br/>keeps latency"| OK["Chosen"]
+```
+*Figure: the four Develop options and why hybrid ranking won.*
 
 **Deliver**
 - Offline: users found the right item in top results far more often.

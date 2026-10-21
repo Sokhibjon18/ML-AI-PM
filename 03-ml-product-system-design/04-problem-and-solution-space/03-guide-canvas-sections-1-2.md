@@ -22,6 +22,24 @@
 
 **Step 4 — Record the direction** including the conditions of choice (vs baseline, quality, cost, risks).
 
+```mermaid
+flowchart LR
+    S1["1 · Value section<br/>situation, pain, audience"] --> S2["2 · Compare options<br/>value, feasibility, cost, risk"]
+    S2 --> S3{"3 · Is AI<br/>justified?"}
+    S3 -->|"grounds to test"| S4["4 · Record direction<br/>+ conditions of choice"]
+    S3 -->|"no"| N["Simpler non-AI<br/>option preferred"]
+```
+*Figure: the four steps from problem framing to a recorded solution direction.*
+
+```mermaid
+flowchart TD
+    T["Draft Value text"] --> D["Delete: AI, ML, model,<br/>recommendations, personalization"]
+    D --> Q{"Still says what to<br/>change and for whom?"}
+    Q -->|yes| P["Problem space ✓"]
+    Q -->|no| F["Solution leaked in —<br/>rewrite"]
+```
+*Figure: the "delete the tech words" hack for checking the Value section.*
+
 ## Case / example
 Yarmarka option comparison (preliminary):
 | Option | Value | Feasibility | Cost | Main risk |

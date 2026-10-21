@@ -16,6 +16,17 @@
 4. **Refine:** compare your version, the assistant's, and your manual check; note the biggest discrepancy and which version is best supported; write the final Problem Space. "Not enough data yet" is a valid outcome.
 5. **Gate to Solution Space:** treat the existing AI feature as one possible solution and answer: what specific problem and measurable business result? is there a simpler non-AI option with comparable effect? does AI win on quality, cost, speed, risk? List what a PM would still need to check; "moving to an AI solution isn't justified yet" is also a result.
 
+```mermaid
+flowchart LR
+    A["1 · Own draft<br/>no AI"] --> B["2 · Find gaps<br/>2–3 research questions"]
+    B --> C["3 · AI assistant version<br/>+ verify key claim"]
+    C --> D["4 · Refine<br/>final Problem Space"]
+    D --> E{"5 · Gate to<br/>Solution Space"}
+    E -->|"justified"| F["AI feature as one<br/>possible solution"]
+    E -->|"not yet"| G["List what PM<br/>still must check"]
+```
+*Figure: the five steps of the assignment; "not justified yet" is a valid outcome.*
+
 **Self-check list:** one specific feature; own draft before using AI; all three elements present; no AI solution baked into the problem; compared with assistant's version; verified at least one key claim; facts separated from assumptions; missing info recorded.
 
 ## PM takeaways
