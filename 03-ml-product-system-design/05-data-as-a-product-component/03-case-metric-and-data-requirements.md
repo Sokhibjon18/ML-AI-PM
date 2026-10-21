@@ -10,10 +10,33 @@
 
 ## Concepts & definitions
 - **Confusion matrix** (positive class = the thing being detected): TP (said yes, is yes), FP (said yes, is no), FN (said no, is yes), TN (said no, is no).
+
+  | | Actually yes | Actually no |
+  |---|---|---|
+  | **Model says yes** | TP | FP — false alarm |
+  | **Model says no** | FN — miss | TN |
+
+  *Figure: the confusion matrix; recall looks at the "Actually yes" column, precision at the "Model says yes" row.*
 - **Recall** — share of truly relevant/positive cases the model found. Prioritize when missing something (FN) is costly.
 - **Precision** — share of model's positive calls that are correct. Prioritize when false alarms (FP) are costly.
 - **Threshold** — model outputs a confidence 0–1; cases ≥ threshold (e.g. 0.7) are flagged. Lower threshold → catch more positives but more false alarms; higher → more cautious, fewer catches and fewer false alarms.
 - **Three evaluation levels:** model metrics (precision, recall) → product metrics (share of wrongly removed reviews, appeals, support load) → business metrics (active assortment, sales, seller retention). Transitions are hypotheses to test, not automatic.
+
+```mermaid
+flowchart LR
+    M["Model metrics<br/>precision, recall"] -->|"hypothesis"| P["Product metrics<br/>wrong removals, appeals"]
+    P -->|"hypothesis"| B["Business metrics<br/>assortment, sales,<br/>seller retention"]
+```
+*Figure: the three evaluation levels; each arrow needs its own test.*
+
+```mermaid
+flowchart TD
+    E{"Which error<br/>costs more?"} -->|"miss, FN"| R["Prioritize recall<br/>e.g. photo search"]
+    E -->|"false alarm, FP"| P["Prioritize precision<br/>e.g. fake review detector"]
+    R --> W["Monitor precision<br/>as secondary"]
+    P --> M2["Borderline cases<br/>to manual review"]
+```
+*Figure: choosing the primary metric from the business cost of errors — the same task can flip in another product.*
 
 ## Case / example
 **Photo search (find a lamp from a photo)**

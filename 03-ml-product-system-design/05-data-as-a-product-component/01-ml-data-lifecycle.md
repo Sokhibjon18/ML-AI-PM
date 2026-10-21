@@ -9,6 +9,16 @@
 - The data lifecycle is a loop: product output creates new data that goes back through collection, prep, labeling and quality checks.
 - Quality starts with data, not the model.
 
+```mermaid
+flowchart LR
+    C["Collection"] --> P["Preparation<br/>+ quality checks"]
+    P --> L["Labeling"]
+    L --> M["Model<br/>train / val / test"]
+    M --> O["Product output"]
+    O -->|"creates new data"| C
+```
+*Figure: the ML data lifecycle is a loop — product output feeds the next round of data.*
+
 ## Concepts & definitions
 - **Data quality** — how fit the data is for *this specific task*, not how much there is. Typical dimensions: accuracy, completeness, consistency, timeliness, uniqueness, validity, availability. Same dataset can be valuable for one task and useless for another. Low quality → bad decisions, skewed analytics, financial and reputational loss.
 - **Learning signal types:**
@@ -16,6 +26,15 @@
   - Semi-supervised — labels for only part of the data (some categories expert-checked; labeling millions of cards is too costly).
   - Unsupervised — no target (e.g. clustering buyers by behavior). Labeling needs depend on the approach.
 - **Train / validation / test** — train: learn patterns/weights; validation: compare models, tune hyperparameters, detect overfitting; test: final independent check on unseen data before launch.
+
+```mermaid
+flowchart LR
+    D["Dataset<br/>split before preprocessing"] --> TR["Train<br/>learn patterns"]
+    TR --> VA["Validation<br/>compare, tune,<br/>catch overfitting"]
+    VA --> TE["Test<br/>final check on<br/>unseen data"]
+    TE --> LA["Launch decision"]
+```
+*Figure: the role of each data split; splitting first helps prevent leakage.*
 - **Overfitting** — model memorizes training examples including noise; great on known data, poor on new. Like a student who memorized only the practice questions.
 - **Data leakage** — information unavailable at prediction time leaks into training/evaluation, inflating metrics. Prevent by splitting before any preprocessing, checking feature–target relationships, excluding features unavailable in production.
 - **Data drift** — input data distribution shifts over time away from training data, so quality drops even though the model hasn't changed.
@@ -26,6 +45,15 @@
 1. **Before development** — do the needed data exist and can they become a reliable learning signal? (collection → prep/quality → labeling). If not, adjust the AI solution to the constraints.
 2. **Before launch** — does the model work on new, real data, not just known examples?
 3. **After launch** — have the data changed; does the system still create business value? May require changing metrics, problem framing or data collection.
+
+```mermaid
+timeline
+    title Three PM control points
+    Before development : Do the data exist? : Can they become a reliable learning signal?
+    Before launch : Does the model work on new, real data?
+    After launch : Have the data drifted? : Is business value still there?
+```
+*Figure: where the PM checks data along the project timeline.*
 
 **Collection questions:** do signals reflect real behavior and relate to the decision? (views may be accidental; add-to-cart signals intent; purchases most reliable but rare). Demand forecasting needs context (seasonality, promos, assortment changes); antifraud needs correct fraud examples. Also check access, legal permission to train, privacy and security limits — data can exist technically yet be unusable.
 

@@ -9,6 +9,19 @@
 - Volume ≠ quality: a million bad records can be worth less than ten thousand well-prepared examples.
 - Structured, existing data is not automatically ready; prep time and cost must factor into the product decision.
 
+```mermaid
+flowchart LR
+    S0["0 · Prepare<br/>ask adjacent teams"] --> S1["1 · Source"]
+    S1 --> S2["2 · Format"]
+    S2 --> S3["3 · Preparation steps"]
+    S3 --> S4["4 · Risks"]
+    S4 --> D{"Product decision"}
+    D --> P["Proceed"]
+    D --> C["Change the task"]
+    D --> R["Rethink the<br/>AI approach"]
+```
+*Figure: filling the Data section column by column ends in a product decision, not a formality.*
+
 ## Frameworks / methods
 **Step 0 — Prepare.** Beyond the business problem, gather from adjacent teams: what data exists, who owns it, which related processes run now. Assess the real state of data.
 
@@ -37,6 +50,17 @@ Yarmarka Data section:
 - **Source:** buyer behavior logs — impressions, views, clicks, add-to-cart, purchases with timestamps, user ID, item ID; plus item attributes and categories. Owner: marketplace analytics. Continuously collected, available for regular refresh.
 - **Format:** structured events (user, item, time, interaction type, display position) + item attributes/category; history links behavior to later actions. No direct "item relevant to user" label — relevance inferred from indirect signals (clicks, views, cart, purchases).
 - **Preparation:** (1) assemble events into user session sequences; (2) remove bots, duplicates, anomalies; (3) handle gaps and new users without history; (4) link events to the current catalog; (5) build training examples and behavior features; (6) define the target signal and its rules; (7) set up regular post-launch refresh; use a 12-month historical funnel log to check effect.
+
+```mermaid
+flowchart LR
+    A["1 · Events →<br/>session sequences"] --> B["2 · Remove bots,<br/>duplicates, anomalies"]
+    B --> C["3 · Handle gaps,<br/>new users"]
+    C --> D["4 · Link events<br/>to current catalog"]
+    D --> E["5 · Training examples<br/>+ behavior features"]
+    E --> F["6 · Define target<br/>signal and rules"]
+    F --> G["7 · Regular refresh<br/>after launch"]
+```
+*Figure: Yarmarka data preparation pipeline, ending in a sustainable data process.*
 - **Risks:** weak relevance signal (click ≠ interest; no click may be due to low position); cold start for new buyers and new SKUs (which are part of the business problem); sample/position bias (higher-shown items get more clicks regardless of relevance); cannibalization (collections steal search traffic without raising total conversion); popularity bias (model amplifies hits, concentrating GMV further in the short tail).
 
 ## PM takeaways

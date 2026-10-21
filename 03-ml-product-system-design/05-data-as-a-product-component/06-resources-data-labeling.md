@@ -7,6 +7,18 @@
 - Don't read everything: pick sources by the PM question you need answered. Resources are organized as a "PM question map" with six question areas, each at three depth levels (L1 = what is it, L2 = how to choose/do it, L3 = how to manage it as a product asset).
 - Goal: treat labeling as part of the AI product — judged by quality, cost, speed and fitness of the data.
 
+```mermaid
+mindmap
+  root((Labeling as a product asset))
+    What to label
+    Where labels come from
+    How much data is needed
+    How good the labels are
+    Which approach to choose
+    Managing labeling after launch
+```
+*Figure: the six PM questions that organize this list; each has L1 → L2 → L3 depth levels.*
+
 ## Resources by question
 
 ### What to label
