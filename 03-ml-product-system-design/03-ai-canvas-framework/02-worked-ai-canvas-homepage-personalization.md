@@ -28,9 +28,46 @@
 - **Skills:** beyond "ML engineer + developer": product, buyer behavior, catalog structure, event pipelines, recsys/ranking, experimentation, UI integration, post-launch ops; possibly a merchandising expert.
 - **Output:** system = ordered list of items for a given collection/block. Quality questions: are useful items at the top, stable across user groups, do new items vanish for lack of history. Business: higher collection CTR may be **cannibalization** (purchases moved from search) — need incremental, not redistributed, effect.
 - **Integration (high-level flow):** buyer opens homepage → system gets context + catalog candidates → AI ranks → homepage receives list → buyer interacts → new events flow back for future updates. Not an architecture diagram.
+
+```mermaid
+flowchart LR
+    A["Buyer opens<br/>homepage"] --> B["System gets context<br/>+ catalog candidates"]
+    B --> C["AI ranks items"]
+    C --> D["Homepage receives<br/>ordered list"]
+    D --> E["Buyer interacts"]
+    E -->|"new events"| B
+```
+*Figure: Yarmarka integration flow at product level, with interactions feeding future updates — not an architecture.*
 - **Decision ripple 1:** switching from one list for all to per-user ranking touches Data, Output, Integration, Skills, Cost, Revenue (must prove vs baseline), VP. Quiz: if VP, audience and revenue mechanism stay the same, revisit **Data, Output, Integration** first.
+
+```mermaid
+flowchart LR
+    X["One list for all →<br/>per-user ranking"] --> F
+    X --> L
+    subgraph F["Revisit first"]
+        D["Data"]
+        O["Output"]
+        I["Integration"]
+    end
+    subgraph L["Also affected"]
+        S["Skills"]
+        C["Cost"]
+        R["Revenue vs baseline"]
+        V["Value Proposition"]
+    end
+```
+*Figure: decision ripple — one local model change spreads across the Canvas.*
 - **Decision ripple 2:** adding item attributes so new SKUs can be ranked before history accumulates → more data (category, description, attributes), output must work with sparse history, candidate rules for new items, cold-start skills, higher data-prep cost, revenue checked via demand for new/niche items, sharper VP.
 - **Revenue math:** 62.9M visits/month, 1.76M orders, AOV 2,900 ₽, 12% commission. +0.2 pp conversion ≈ 125,800 extra orders/month ≈ 365M ₽ GMV ≈ 43.8M ₽ platform revenue/month ≈ 525M ₽/year. Small relative change, big absolute money — but the experiment must be able to distinguish such a small delta from noise.
+
+```mermaid
+flowchart LR
+    A["62.9M visits/month<br/>+0.2 pp conversion"] --> B["≈125,800<br/>extra orders/month"]
+    B -->|"× AOV 2,900 ₽"| C["≈365M ₽<br/>GMV/month"]
+    C -->|"× 12% commission"| D["≈43.8M ₽<br/>revenue/month"]
+    D -->|"× 12"| E["≈525M ₽/year"]
+```
+*Figure: how a +0.2 pp conversion change turns into platform revenue — a hypothesis, not a promise.*
 - **Final quiz:** CTR rose, total orders flat, search usage fell → the local result improved but its link to VP and economic effect is unconfirmed (not a data, output format, placement, audience or stakeholder problem).
 
 ## PM takeaways

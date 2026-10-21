@@ -21,6 +21,25 @@
 3. **Write WS as one sentence:** "The system receives ___, [AI action], outputs ___, the result goes to ___ and is used for ___." If you can't finish it, you found a team question. "Data → AI → recommendations" is not a WS. Prefer an explicit question ("what do we show a new buyer?") over hiding it behind "personalization".
 4. **Return to the Canvas** — fix what WS revealed.
 
+```mermaid
+flowchart LR
+    S1["1 · Completeness<br/>hypothesis in every block"] --> S2["2 · Consistency<br/>check five links"]
+    S2 --> S3["3 · WS in one sentence<br/>leave ? where unknown"]
+    S3 --> S4["4 · Return to Canvas<br/>fix what WS revealed"]
+    S4 -->|"iterate"| S1
+```
+*Figure: the four-step concept check as a loop.*
+
+```mermaid
+flowchart LR
+    DA["Data"] <-->|"can it produce?"| OU["Output"]
+    OU <-->|"linked to value?"| VP["Value"]
+    IN["Integration"] <-->|"delivers promise?"| VP
+    CU["Customers"] <-->|"data fits them?"| DA
+    CO["Cost"] <-->|"pays off?"| RE["Revenue"]
+```
+*Figure: the five consistency links to check between Canvas blocks.*
+
 **Which tool first:**
 | Unclear… | AI Canvas | WS |
 |---|---|---|
@@ -34,6 +53,14 @@
 | Where economic effect comes from | Yes | Only as extra check |
 
 Quiz principle: model known but consumer unknown → WS first; flow known but cost/skills not discussed → Canvas; gaps in both product composition and flow (e.g. new-SKU data, output, consumer all unclear) → both.
+
+```mermaid
+flowchart TD
+    Q{"What is unclear?"} -->|"consumer / flow"| W["Walking Skeleton first"]
+    Q -->|"cost / skills / value"| C["AI Canvas"]
+    Q -->|"both composition and flow"| B["Use both"]
+```
+*Figure: picking the tool by what is still unclear.*
 
 **Definition-of-Done checklist**
 - Canvas: value, customers, data hypothesis, system output, skills, place of use, stakeholders, cost sources, effect source.

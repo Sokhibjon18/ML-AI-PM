@@ -19,6 +19,16 @@
   - Result: what exactly comes out (5 ready cards? hundreds of item IDs? per-item scores sorted elsewhere?). Without it, team members imagine different products.
   - Action: what the consumer does with it; if the homepage receives the list but keeps showing the old block, the flow is incomplete.
 
+```mermaid
+flowchart LR
+    D["Data<br/>Q1: what goes in?"] --> M["Model<br/>Q2: what does AI do?"]
+    M --> R["Result<br/>Q3: what comes out?"]
+    R --> C["Consumer<br/>Q4: who receives it?"]
+    C --> A["Action<br/>Q5: what happens next?"]
+    A -.->|"optional, beyond WS"| E["Expected effect<br/>→ Value Proposition"]
+```
+*Figure: extended Walking Skeleton — Data, Model and Consumer are the minimal three; the five quick-check questions map onto the links.*
+
 ## Frameworks / methods
 **Five-question quick check:**
 1. What goes in? (basic meaning: user query, image, application data)
@@ -37,12 +47,32 @@ A missing answer isn't a bad project — it's a question the team must clarify.
 
 **WS vs architecture:** WS = input, AI function, output, consumer, next action. Architecture = components, storage, messaging, protocols, fault tolerance/security/scaling, deployment. PM needs to explain the WS; engineers design the architecture.
 
+```mermaid
+flowchart LR
+    subgraph WS["Walking Skeleton · PM explains"]
+        W1["Input"] --- W2["AI function"] --- W3["Output"] --- W4["Consumer"] --- W5["Next action"]
+    end
+    subgraph AR["Architecture · engineers design"]
+        A1["Components, storage"] --- A2["Messaging, protocols"] --- A3["Fault tolerance,<br/>security, scaling"] --- A4["Deployment"]
+    end
+```
+*Figure: Walking Skeleton and architecture answer different questions and have different owners.*
+
 ## Case / example
 Yarmarka scenarios:
 - Known buyer, known items: buyer history + item data → ranking model → homepage service.
 - New buyer: current visit context + item data → ranking → homepage (what signals replace history? what is an acceptable fallback?).
 - New item: new item attributes + buyer context → ranking → homepage. Critical — if the flow works only for items with rich history, the concept contradicts its own value proposition.
 - A great ranker can't help if new SKUs never enter the candidate set — fix the earlier link first.
+
+```mermaid
+flowchart LR
+    K["Known buyer:<br/>buyer history + item data"] --> RM["Ranking model"]
+    N["New buyer:<br/>visit context + item data"] --> RM
+    I["New item:<br/>item attributes + buyer context"] --> RM
+    RM --> H["Homepage service"]
+```
+*Figure: three Yarmarka scenarios share one skeleton but need different inputs; the new-item path is the critical one for the value proposition.*
 - Alignment meeting: PM, ML, developer, homepage team and seller team each imagine a different system; writing the WS together exposes the differences.
 - WS clarifies: available buyer info at serve time, new buyer/new item handling, candidate set, what the homepage receives (IDs vs ready collection), fallback/baseline when personalization fails. WS does not verify: data sufficiency, ranking quality, cost, team skills, security compliance, incremental business effect, beating the baseline, whether a non-ML solution suffices.
 - Quiz principles: "behavior + item data → ranker → personal ordered list" is missing the consumer; useful extended-WS questions concern meaning of the output for the consumer, the consumer's action, entry into the current process, expected business change — not programming language or algorithm choice.

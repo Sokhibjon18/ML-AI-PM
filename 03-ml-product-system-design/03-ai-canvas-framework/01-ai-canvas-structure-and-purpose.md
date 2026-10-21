@@ -3,6 +3,31 @@
 > Module: ML Product System Design · Topic: AI Canvas Framework · Lesson 1
 > Original: «AI Canvas: структура и назначение»
 
+## At a glance
+
+```mermaid
+flowchart TD
+    subgraph Q1["1 · What value, for whom"]
+        VP["Value Proposition"]
+        CU["Customers"]
+    end
+    subgraph Q2["2 · What's needed, what result"]
+        DA["Data"]
+        SK["Skills"]
+        OU["Output"]
+    end
+    subgraph Q3["3 · How it enters the product"]
+        IN["Integration"]
+        ST["Stakeholders"]
+    end
+    subgraph Q4["4 · Does it make economic sense"]
+        CO["Cost"]
+        RE["Revenue"]
+    end
+    Q1 --> Q2 --> Q3 --> Q4
+```
+*Figure: the nine AI Canvas blocks grouped into four questions; quality is judged by how consistent the blocks are with each other.*
+
 ## Key ideas
 - A business problem ("we need recommendations") is too vague to hand to engineering: it doesn't say what data is needed, what the system outputs, how it's used, who benefits, who builds it, cost, or how it makes/saves money. These answers are interdependent.
 - The course's AI Canvas (9 blocks, same as the "AI Project Canvas") puts these **assumptions** on one page so the team can see whether they form a coherent concept. It is not proof the project will work.
@@ -22,6 +47,13 @@ Nine blocks grouped into four questions:
      2. how good that output is (quality criterion);
      3. what changes in product/business (fewer defaults, more orders, faster shelf restock).
      Chain: output → quality of output → product/business metric.
+
+```mermaid
+flowchart LR
+    O["System output<br/>e.g. ordered item list"] --> Q["Quality of output<br/>quality criterion"]
+    Q --> B["Product / business change<br/>e.g. more orders"]
+```
+*Figure: the three Output levels — keep them separate; each arrow is a hypothesis.*
    - No separate field for model type — record and justify it in the memo.
 3. **How it becomes part of the product**
    - **Integration** — where the output lands and who/what acts on it. Same model, different products: human-curated vs fully automatic homepage. Integration drives latency needs, human-in-the-loop, error tolerance, process design, dev/ops cost. PM doesn't design APIs but must own the AI component's place in the process.
@@ -38,6 +70,13 @@ Nine blocks grouped into four questions:
   - Revenue vs Cost: "reduce manual work" but need a large team to check every model output.
 - **Tool comparison:** Lean Canvas = is the business idea viable (problem, segments, channels, revenue); AI Canvas = does it form a coherent AI product concept (data, output, skills, integration, stakeholders); PRD = detailed functions, behavior, constraints, success criteria of the product being built. Complementary, typically in that order.
 - Blocks unique to other canvases (not in AI Canvas): Customer Segments, Channels, Key Partners, Problem.
+
+```mermaid
+flowchart LR
+    L["Lean Canvas<br/>is the business idea viable?"] --> A["AI Canvas<br/>is the AI concept coherent?"]
+    A --> P["PRD<br/>functions, behavior, constraints"]
+```
+*Figure: the three tools are complementary and are typically used in this order.*
 
 ## Case / example
 - Yarmarka: 3.1M SKUs, 71% of turnover from 4% of the assortment; homepage almost identical for everyone (only city banners differ). Team considers homepage/collection personalization.
