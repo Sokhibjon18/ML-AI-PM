@@ -17,5 +17,23 @@
   - Acceptance is not "works / doesn't work" but "how well, and at what cost".
 - **Offline vs online gap:** live uplift being noticeably smaller than historical uplift is the rule, not the exception — historical data is skewed by the company's past decisions. Plan for online testing; this is not a reason to distrust models.
 
+```mermaid
+flowchart TD
+  S["Decision to automate"] --> C{"Need certainty,<br/>e.g. fixed limit?"}
+  C -->|yes| R["Use a rule"]
+  C -->|no| D{"Enough data?"}
+  D -->|no| R
+  D -->|yes| P{"Complex, non-obvious<br/>pattern?"}
+  P -->|no| R
+  P -->|yes| T{"Business tolerates<br/>some errors?"}
+  T -->|no| R
+  T -->|yes| M["Use a model"]
+  M --> O["Backtest offline"]
+  O --> L["Validate on live traffic"]
+  L --> W["Monitor quality metrics<br/>continuously"]
+```
+
+*Figure: Rule vs model, then why one backtest is not enough to ship.*
+
 ## PM takeaways
 - Treat ML acceptance as a quality/cost trade-off measured continuously, not a one-time pass/fail.
