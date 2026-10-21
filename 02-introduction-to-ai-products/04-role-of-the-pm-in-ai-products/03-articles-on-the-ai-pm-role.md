@@ -36,6 +36,16 @@
 - **Most-requested:** PM experience 100%; hypotheses/experiments/discovery 75%; working with ML/data team 70%; product metrics 65%; LLM/GenAI understanding 60%; technical literacy 40%; model quality metrics 40%; classic research 30%; predictive tech 30%; explicit A/B 25%; SQL 20%; ML task framing 20%; Python 15%; model lifecycle 15%; data/assessors 10%; "labeling" 0%; monitoring/drift/degradation/retraining 0%.
 - Conclusions: the market buys a strong classic PM unafraid of ML teams; labeling and model lifecycle aren't mentioned in postings at all; SQL/Python are asked far less than assumed. Caveat: small, SEO-biased sample skewed to large employers.
 
+```mermaid
+xychart-beta horizontal
+  title "Share of 20 postings mentioning a requirement"
+  x-axis ["PM experience", "Experiments", "ML/data team", "Product metrics", "LLM/GenAI", "Tech literacy", "Model metrics", "A/B tests", "SQL", "Python", "Model lifecycle", "Monitoring/drift"]
+  y-axis "Percent" 0 --> 100
+  bar [100, 75, 70, 65, 60, 40, 40, 25, 20, 15, 15, 0]
+```
+
+*Figure: Selected requirements from the H1 2026 posting snapshot.*
+
 ## PM takeaways
 - Read job titles by actual duties (generative vs predictive), not the "AI"/"ML" label.
 - Lifecycle and labeling skills are under-specified by employers — a potential differentiator.

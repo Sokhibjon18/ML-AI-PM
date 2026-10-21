@@ -22,12 +22,35 @@ Using neural nets daily doesn't make you an AI PM (though it's becoming an indus
 
 **Nested technologies:** AI ⊃ ML (algorithms that learn patterns and predict) ⊃ Deep Learning (neural nets that extract complex features themselves) ⊃ LLMs / generative models (create new content). Paradox: every generative model is technically ML, yet in job postings "ML" means predictive and "AI" means generative — read the actual duties, not the title.
 
+```mermaid
+flowchart TB
+  subgraph AI["AI"]
+    subgraph ML["ML: learns patterns, predicts"]
+      subgraph DL["Deep learning: extracts features itself"]
+        G["LLMs / generative models"]
+      end
+    end
+  end
+```
+
+*Figure: Nested technologies; in job postings ML usually means predictive and AI means generative.*
+
 **Ladder of system autonomy (bottom → top):**
 1. **Executes rules** — expert-written conditions; always explainable, knows only what's encoded.
 2. **Predicts** — humans prepare data and features; model finds patterns (risk, demand, segmentation).
 3. **Perceives** — deep learning builds features itself; unlocks unstructured data (images, audio, text: face/speech recognition, semantic search). Needs more data/compute; team focus shifts from feature engineering to data collection and labeling.
 4. **Creates** — generative models output new content (summaries, translation, images) instead of labels or numbers.
 5. **Acts** — agents plan steps and call external tools (tool calling); built from lower levels, not a separate technology.
+
+```mermaid
+flowchart BT
+  L1["1. Executes rules"] --> L2["2. Predicts"]
+  L2 --> L3["3. Perceives"]
+  L3 --> L4["4. Creates"]
+  L4 --> L5["5. Acts: agents"]
+```
+
+*Figure: Ladder of autonomy; use the lowest level that solves the task with acceptable quality.*
 
 Real products mix levels (antifraud: rules + predictive model; support: predictive routing + generative replies + agent orchestration with escalation rules).
 
@@ -53,6 +76,20 @@ Real products mix levels (antifraud: rules + predictive model; support: predicti
 3. **Is probabilistic error acceptable?** Tolerable error cost + a fallback plan (human re-check, rollback to rule, interval instead of exact value) → fits. Need 100% guarantee → model only as an assistant; specialist decides.
 
 Passing all three means AI is *appropriate*, not that it pays off — economics (data, team, maintenance) come in Module 4. Real tasks usually split: "Where's my order?" = rule + DB status; free-form product questions = model.
+
+```mermaid
+flowchart TD
+  T["Task"] --> C1{"Complex and<br/>repeating pattern?"}
+  C1 -->|"repeating, not complex"| Rule["Rule"]
+  C1 -->|"complex, not repeating"| Human["Human"]
+  C1 -->|yes| C2{"Suitable data, or<br/>obtainable cheaply?"}
+  C2 -->|no| No["No AI for now"]
+  C2 -->|yes| C3{"Probabilistic error<br/>acceptable + fallback?"}
+  C3 -->|no| Asst["Model as assistant,<br/>specialist decides"]
+  C3 -->|yes| Yes["AI is appropriate<br/>then check economics"]
+```
+
+*Figure: The three criteria; all must be yes.*
 
 ## Case / example
 - Streaming recommendations: complex repeating taste pattern, viewing history exists, a bad pick costs one click → **yes**.

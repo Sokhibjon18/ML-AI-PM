@@ -14,6 +14,15 @@
 - **Project-management fix:** timebox the research phase with an exit criterion ("two weeks, then continue or stop"); sell stakeholders a **decision date**, not a model release date. "Hypothesis tested and rejected" is a completed milestone.
 - At demo, the model beat the rule; he accepted it routinely. The missing conversation: how many real people would be wrongly flagged, what happens to them, and is that cost acceptable. Discounts went to loyal users; project shut down; trust in "AI" dropped. Churn was never even consistently defined.
 
+```mermaid
+flowchart LR
+  R["Research phase<br/>timeboxed, two weeks"] --> D{"Decision date:<br/>beats baseline?"}
+  D -->|yes| C["Continue"]
+  D -->|no| S["Stop: hypothesis<br/>rejected = milestone done"]
+```
+
+*Figure: Sell stakeholders a decision date, not a model release date.*
+
 **Attempt 2 — failed auto-renewal payments (succeeded)**
 - Problem: some auto-renewals fail (no funds, bank decline, expired card); after three retries the subscription silently lapses → lost paying users. Idea: predict failures and prompt a card update in advance.
 - **Step 1 — data:** "We have 3 years of payment history" from a data scientist means tables exist, not that data is complete, current and legally usable. Right move: ask for fields, period and gaps, and go to legal in parallel. (A subscription-type field had been renamed 1.5 years earlier, making older history read as empty; legal approval took **five weeks** — the longest part.) Don't buy external data before inventorying your own gaps. Labels came for free here (payment succeeded or not), unlike churn.
@@ -22,6 +31,19 @@
   - Trade-off: soft threshold → warn 40k users/month, catch most failures; strict → 9k, under half. Chose near-strict; soft in-app banner instead of email; error plan = still do three retries if ignored. Acceptance: higher renewal success with unsubscribes not above current level.
   - Two weeks of shadow mode revealed much worse live performance: history contained only the charge attempts the company chose to make, and retry rules had changed several times — the model learned the company's **own old logic**, not bank behavior. Three more weeks rebuilding the dataset, then A/B.
 - **Step 4 — after A/B:** uplift → rolled out to all. When a new big project claimed the data team, the right call was to reserve capacity for data/metric monitoring, retraining and threshold review, and pre-agree **rollback triggers** to the old scheme. On-call teams see only uptime and clean logs; degrading prediction quality shows up only in quality and business metrics — often late.
+
+```mermaid
+flowchart LR
+  A["Data inventory<br/>+ legal, 5 weeks"] --> B["Framing vs<br/>3-retry baseline"]
+  B --> C["Threshold and<br/>acceptance criterion"]
+  C --> D["Shadow mode,<br/>2 weeks"]
+  D -->|"learned old company logic"| E["Rebuild dataset,<br/>3 weeks"]
+  E --> F["A/B test"]
+  F --> G["Roll out to all"]
+  G --> H["Monitoring, retraining,<br/>rollback triggers"]
+```
+
+*Figure: Attempt 2 (failed auto-renewals) end to end; launch is the middle of the project.*
 
 **A year later — filtering "let's add AI" requests** (about half fail the first criterion):
 - ✔ Detect insults/profanity in reviews — word lists get bypassed by typos/context; complex repeating pattern; moderation data exists; edge cases to humans.
